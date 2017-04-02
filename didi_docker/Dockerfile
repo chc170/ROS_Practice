@@ -23,9 +23,16 @@ RUN useradd -m $USERNAME && \
     usermod  --uid $UID $USERNAME && \
     groupmod --gid $GID $USERNAME
 
+# vboxsf permissions
+RUN echo "vboxsf:x:998:$USERNAME" >> /etc/group
+
 USER $USERNAME
 ENV HOME /home/$USERNAME
 
-RUN echo "export QT_X11_NO_MITSHM=1" >> /home/ros/.bashrc
-#RUN echo "export QT_GRAPHICSSYSTEM=native" >> /home/ros/.bashrc
-RUN echo "source /opt/ros/indigo/setup.bash" >> /home/ros/.bashrc
+RUN echo "export QT_X11_NO_MITSHM=1" >> /home/$USERNAME/.bashrc
+#RUN echo "export QT_GRAPHICSSYSTEM=native" >> /home/$USERNAME/.bashrc
+RUN echo "source /opt/$USERNAME/indigo/setup.bash" >> /home/$USERNAME/.bashrc
+
+# create workspace
+RUN mkdir -p /home/$USERNAME/catkin_ws/src
+

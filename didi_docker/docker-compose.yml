@@ -1,23 +1,26 @@
 version: '2'
 services:
-    master:
+    didi_master:
         container_name: didi_master
-        image: ros:ros-rviz
+        image: didi_viacom:ros
         environment:
             ROS_HOSTNAME: didi_master
         command:
             - roscore
-    node:
+    didi_node:
         container_name: didi_node
-        image: ros:ros-rviz
+        image: didi_viacom:ros
         environment:
             ROS_HOSTNAME: didi_node
             ROS_MASTER_URI: http://didi_master:11311
             DISPLAY: ${DISPLAY}
         volumes:
+            # link X11 forwarding
             - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
-            - ~/ros/docker/didi_challenge_ros:/home/ros/catkin_ws/src/didi_ros
-            - ~/ros/data:/home/ros/data
+            # link source code directory
+            - ~/ros/docker/didi_challenge_ros:/home/didi/catkin_ws/src/didi_ros
+            # link data directory
+            - ~/ros/data:/home/didi/data
         links:
             - didi_master
         tty: true

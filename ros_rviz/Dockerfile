@@ -1,8 +1,8 @@
-FROM ros:indigo-ros-core
+FROM osrf/ros:indigo-desktop-full
 MAINTAINER Todd Sampson "toddsampson+docker@gmail.com"
 
-RUN apt-get -y update
-RUN apt-get -y install ros-indigo-rviz
+#RUN apt-get -y update
+#RUN apt-get -y install ros-indigo-rviz
 
 # IMPORTANT: Update these values to your primary computer user id and group id
 # On OSX use `id -u` and `id -g` to find the correct values

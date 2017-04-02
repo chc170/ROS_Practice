@@ -1,26 +1,25 @@
 version: '2'
 services:
-    rviz_master:
-        container_name: rviz_master
-        image: ros:ros-tutorials
-        environment:
-            ROS_HOSTNAME: rviz_master
-        command:
-            - roscore
-    rviz_node:
-        container_name: rviz_node
+    master:
+        container_name: didi_master
         image: ros:ros-rviz
         environment:
-            QT_X11_NO_MITSHM: 1
-            ROS_HOSTNAME: rviz_node
-            ROS_MASTER_URI: http://rviz_master:11311
+            ROS_HOSTNAME: didi_master
+        command:
+            - roscore
+    node:
+        container_name: didi_node
+        image: ros:ros-rviz
+        environment:
+            ROS_HOSTNAME: didi_node
+            ROS_MASTER_URI: http://didi_master:11311
             DISPLAY: ${DISPLAY}
         volumes:
             - "/tmp/.X11-unix:/tmp/.X11-unix:rw"
             - ~/ros/docker/didi_challenge_ros:/home/ros/catkin_ws/src/didi_ros
             - ~/ros/data:/home/ros/data
         links:
-            - rviz_master
+            - didi_master
         tty: true
         stdin_open: true
         command: bin/bash #rosrun rviz rviz
